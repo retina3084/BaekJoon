@@ -1,28 +1,45 @@
+import java.util.EmptyStackException;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int number = scan.nextInt();
+        scan.nextLine();
+        for(int i=0; i<number; i++){
+            String ps = scan.nextLine();
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int t = sc.nextInt();
-		for(int i=0; i<t; i++) {
-			String str = sc.next();
-			int sum=1;
-			if (str.charAt(0) ==')') {System.out.println("NO");}
-			else {
-				for(int j=1;j<str.length();j++) {
-					if(str.charAt(j)=='(') {
-						sum+=1;
-					}
-					else if(str.charAt(j)==')') {
-						sum-=1;
-					}
-                    if(sum<0) break;
-				}
-				if(sum==0) {System.out.println("YES");}
-				else {System.out.println("NO");}
-			}
-		}
-	}
+            if(isVPS(ps)) {
+                System.out.println("YES");
+            }
+            else {
+                System.out.println("NO");
+            }
 
+        }
+    }
+
+    private static boolean isVPS(String ps) {
+        Stack<Integer> stack = new Stack<>();
+        try {
+            for (int i=0; i < ps.length(); i++) {
+                if (ps.charAt(i) == '(') {
+                    stack.push(0);
+                } else if (ps.charAt(i) == ')') {
+                    stack.pop();
+                }
+            }
+
+            if(stack.isEmpty()) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch (EmptyStackException e) {
+            return false;
+        }
+    }
 }
